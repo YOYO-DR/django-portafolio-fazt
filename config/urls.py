@@ -20,8 +20,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('apps.portfolio.urls')),
-    path('blog/',include('apps.blog.urls'))
+    path('',include('core.portfolio.urls')),
+    path('blog/',include('core.blog.urls'))
 ]
 
 #config para la carpeta media
