@@ -1,0 +1,35 @@
+{% extends 'layout.html' %} {% block content %}
+<h1>Posts</h1>
+
+{% for post in posts %}
+<div class="p-3">
+  <div class="card card-body bg-black">
+    <div class="row">
+      <div class="col-3 d-flex align-items-center">
+        <img src="{{post.image.url}}" alt="{{post.title}}" class="img-fluid" />
+      </div>
+      <div class="col-9">
+        <h2>{{post.title}}</h2>
+        {% comment %} asi puedo formatear la fecha como quiera, en la
+        documentacion 'django date format' me dice sobre más formatos, y no tene
+        haber un espacio entre el date: y la comilla del string, debe estar
+        pegado, y con upper puedo mostrarlo en mayuscula, aplica para cualquier
+        texto {% endcomment %}
+        <p>{{post.date|date:'M d Y'|upper}}</p>
+        {% comment %} Esa funcion es para mostrar una cierta cantidad de
+        caracteres si es algo largo, y asi puedo mostrar una vista previa del
+        texto y con '|safe' le digo que interprete etiquetas de html si se llega
+        a pasar en el texto, en este caso, la descripcion, y con el striptags le
+        digo que no interprete etiquetas de html y las quite y deje solo el
+        texto, que en este caso, se dejara {% endcomment %}
+
+        <p>{{post.description|striptags|truncatechars:100}}</p>
+        {% comment %}lo puedo poner tambien "/blog/{{post.id}}" osea,
+        concatenarlo con la direccion, pero en mi caso utilizare la sintaxis de
+        "url + name + parametro" {% endcomment %}
+        <a class="btn btn-primary" href="{% url 'blog:post_detail' post.id %}">{{post.title}}</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %} {% endblock content %}
