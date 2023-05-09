@@ -1,11 +1,21 @@
 from django.shortcuts import render,get_object_or_404
 from .models import Post
+from django.views.generic import ListView,DetailView
 
-def posts(request):
-    posts = Post.objects.all()
-    return render(request,'posts.html',{'posts':posts,'titulo':'Posts'})
+class PostsView(ListView):
+    model = Post
+    template_name = 'posts.html'
 
-def post_detail(request, post_id):
-    #el get_object_or_404 busca en la base de datos, con el id pasado un objeto/registro, y si no lo encuentra, va a retornar una respuesta 404
-    post = get_object_or_404(Post,pk=post_id)
-    return render(request,'post_detail.html',{'post':post,'titulo':f'Post {post_id}'})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["titulo"] = 'Posts'
+        return context
+
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'post_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["titulo"] = f"Post {kwargs['object'].pk}"
+        return context

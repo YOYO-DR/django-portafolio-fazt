@@ -10,6 +10,9 @@ class Post(models.Model):
     #con el datetime.date.today, al ponerlo en el default, le digo que si no le paso nada, por defecto le ponga la fecha en la que se subio
     date = models.DateField(default=datetime.date.today)
 
+    def __str__(self):
+        return self.title
+
     def get_image(self):
         if self.image:
             return self.image.url

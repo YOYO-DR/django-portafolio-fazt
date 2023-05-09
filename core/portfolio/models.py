@@ -9,6 +9,10 @@ class Project(models.Model):
     image = ImageField(upload_to=f'{MEDIA_URL}postfolio/images/')
     url = URLField(blank=True)
 
+    def __str__(self):
+        return self.title
+    
+
     def get_image(self):
         if self.image:
             return self.image
